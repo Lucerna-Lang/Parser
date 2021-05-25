@@ -144,7 +144,7 @@ pub fn set(e: &mut Env, mut v: Vec<DefaultTypes>) -> Vec<DefaultTypes> {
 }
 
 pub fn rm(e: &mut Env, mut v: Vec<DefaultTypes>) -> Vec<DefaultTypes> {
-    let mut x = vec!();
+    let x = vec!();
     let key = v.remove(0);
     if let DefaultTypes::Str(s) = key {
         e.remove(&s);

@@ -5,6 +5,8 @@ use crate::parser::parse_with_env;
 use liber::loader;
 use std::env;
 
+const STDFILE: &str = "std.sic";
+
 /// # Panics
 pub fn caller(sv: Statements, e: &mut Env, is_std: bool) -> &Env {
     // Loads the environment with default libs
@@ -23,7 +25,7 @@ pub fn caller(sv: Statements, e: &mut Env, is_std: bool) -> &Env {
 fn load_std(e: &mut Env) {
     let mut std = env::current_exe().unwrap();
     std.pop();
-    std.push("std.sic");
+    std.push(STDFILE);
     parse_with_env(e, std, true);
 }
 
