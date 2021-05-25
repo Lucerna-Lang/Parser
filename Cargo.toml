@@ -1,0 +1,10 @@
+[package]
+name = "lucerna"
+version = "0.4.0"
+authors = ["Kyando_2 <amehikoji@gmail.com>", "Jonesloto"]
+edition = "2018"
+
+
+[dependencies]
+liber = {path = "../lucerna_libs/liber"}
+structures = {path = "../lucerna_structures"}
