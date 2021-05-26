@@ -1,14 +1,13 @@
-use structures::structs::{Statements, Env, DefaultTypes, Function};
+use structures::structs::{DefaultTypes, Env, Function, Statements};
 
 pub fn parse_functions(ss: Statements, e: &mut Env) -> Statements {
-    let mut c_func= Function::from_raw(vec!());
+    let mut c_func = Function::from_raw(vec![]);
     let mut is_function_scope = false;
     let mut tr: Statements = Vec::new();
     for s in ss {
         if s.is_function_decl() {
-
             is_function_scope = true;
-            c_func = Function::from_raw(vec!());
+            c_func = Function::from_raw(vec![]);
             c_func.set_name((&s.first()).clone());
         }
         if s.is_function_end() {
@@ -22,7 +21,6 @@ pub fn parse_functions(ss: Statements, e: &mut Env) -> Statements {
         if !s.is_function_end() && !s.is_function_decl() && !is_function_scope {
             tr.push((&s).clone());
         }
-
     }
     tr
 }

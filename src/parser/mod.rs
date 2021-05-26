@@ -1,6 +1,6 @@
-mod raw;
-pub mod process;
 mod function;
+pub mod process;
+mod raw;
 
 // STD
 use std::fs::File;
@@ -9,10 +9,12 @@ use std::path::Path;
 // Crate
 use structures::structs::{Env, Statement, Statements};
 // Super
-use raw::{organize_s, fuse_statements};
+use raw::{fuse_statements, organize_s};
 
 pub fn parse<T>(filename: T)
-where T: AsRef<Path>, {
+where
+    T: AsRef<Path>,
+{
     let file = File::open(filename).expect("Error opening file");
     let stats = pre_parse(file);
     let mut env = Env::new();
@@ -20,7 +22,9 @@ where T: AsRef<Path>, {
 }
 
 pub fn parse_with_env<T>(e: &mut Env, filename: T, is_std: bool) -> &Env
-where T: AsRef<Path>, {
+where
+    T: AsRef<Path>,
+{
     let file = File::open(filename).expect("Could not find required files");
     let stats = pre_parse(file);
     process::caller((&stats).clone(), e, is_std)
@@ -29,4 +33,3 @@ where T: AsRef<Path>, {
 fn pre_parse(f: File) -> Statements {
     fuse_statements(organize_s(io::BufReader::new(f).lines()))
 }
-

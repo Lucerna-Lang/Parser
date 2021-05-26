@@ -4,10 +4,14 @@
 
 use std::env;
 
-
-pub mod parser;
 pub mod base;
+pub mod parser;
 
 fn main() {
-    parser::parse(env::args().collect::<Vec<String>>().get(1).expect("No file provided"));
+    parser::parse(
+        env::args()
+            .collect::<Vec<String>>()
+            .get(1)
+            .expect("No file provided"),
+    );
 }
