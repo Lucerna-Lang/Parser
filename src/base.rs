@@ -1,6 +1,6 @@
-use structures::structs::{DefaultTypes, Function, Env, Table, DynFunc};
-use std::rc::Rc;
 use crate::parser::parse_with_env;
+use std::rc::Rc;
+use structures::structs::{DefaultTypes, DynFunc, Env, Function, Table};
 
 // We store this function as a function pointer in a Vec, so the type signatures must line up
 #[allow(clippy::needless_pass_by_value)]
@@ -14,7 +14,6 @@ pub fn print(e: &mut Env, v: Vec<DefaultTypes>) -> Vec<DefaultTypes> {
         e.exit();
     }
     v
-
 }
 
 // We store this function as a function pointer in a Vec, so the type signatures must line up
@@ -41,7 +40,7 @@ pub fn table(e: &mut Env, v: Vec<DefaultTypes>) -> Vec<DefaultTypes> {
 // We store this function as a function pointer in a Vec, so the type signatures must line up
 #[allow(clippy::needless_pass_by_value)]
 pub fn get(e: &mut Env, v: Vec<DefaultTypes>) -> Vec<DefaultTypes> {
-    let mut x = vec!();
+    let mut x = vec![];
     let tab = v.get(0).expect("Bad Arguments");
     let key = v.get(1).expect("Bad Arguments");
     if let DefaultTypes::Table(t) = tab {
@@ -83,11 +82,9 @@ pub fn add(e: &mut Env, mut v: Vec<DefaultTypes>) -> Vec<DefaultTypes> {
     let int2 = v.remove(0);
     match (int1, int2) {
         (DefaultTypes::Int(i1), DefaultTypes::Int(i2)) => {
-            vec![DefaultTypes::Int(i1+i2)]
-        },
-        (_, _) => {
-            v
+            vec![DefaultTypes::Int(i1 + i2)]
         }
+        (_, _) => v,
     }
 }
 
@@ -96,8 +93,8 @@ pub fn eq(e: &mut Env, mut v: Vec<DefaultTypes>) -> Vec<DefaultTypes> {
     let int2 = v.remove(0);
     match (int1, int2) {
         (DefaultTypes::Int(i1), DefaultTypes::Int(i2)) => {
-            vec![DefaultTypes::Bool(i1==i2)]
-        },
+            vec![DefaultTypes::Bool(i1 == i2)]
+        }
         (_, _) => {
             println!("Attempting to call eq on different types");
             v
@@ -110,8 +107,8 @@ pub fn noteq(e: &mut Env, mut v: Vec<DefaultTypes>) -> Vec<DefaultTypes> {
     let int2 = v.remove(0);
     match (int1, int2) {
         (DefaultTypes::Int(i1), DefaultTypes::Int(i2)) => {
-            vec![DefaultTypes::Bool(i1!=i2)]
-        },
+            vec![DefaultTypes::Bool(i1 != i2)]
+        }
         (_, _) => {
             println!("Attempting to call eq on different types");
             v
@@ -119,15 +116,13 @@ pub fn noteq(e: &mut Env, mut v: Vec<DefaultTypes>) -> Vec<DefaultTypes> {
     }
 }
 
-
-
 pub fn break_def(e: &mut Env, v: Vec<DefaultTypes>) -> Vec<DefaultTypes> {
     e.return_f(vec![DefaultTypes::Str("STOPLOOP".to_string())]);
     v
 }
 
 pub fn set(e: &mut Env, mut v: Vec<DefaultTypes>) -> Vec<DefaultTypes> {
-    let mut x = vec!();
+    let mut x = vec![];
     let tab = v.remove(0);
     let key = v.remove(0);
     let value = v.remove(0);
@@ -144,7 +139,7 @@ pub fn set(e: &mut Env, mut v: Vec<DefaultTypes>) -> Vec<DefaultTypes> {
 }
 
 pub fn rm(e: &mut Env, mut v: Vec<DefaultTypes>) -> Vec<DefaultTypes> {
-    let x = vec!();
+    let x = vec![];
     let key = v.remove(0);
     if let DefaultTypes::Str(s) = key {
         e.remove(&s);
@@ -153,19 +148,16 @@ pub fn rm(e: &mut Env, mut v: Vec<DefaultTypes>) -> Vec<DefaultTypes> {
 }
 
 pub fn load_module(e: &mut Env, mut v: Vec<DefaultTypes>) -> Vec<DefaultTypes> {
-    let x = vec!();
+    let x = vec![];
     let tab = v.remove(0);
     if let DefaultTypes::Table(t) = tab {
         for p in t.iter_data() {
             match (p.key(), p.value()) {
-                (DefaultTypes::Str(k), v) => {
-                    e.add_variable(&k, v.clone())
-                }
+                (DefaultTypes::Str(k), v) => e.add_variable(&k, v.clone()),
                 (_, _) => {
                     println!("Non standard Table, contains Non-string ")
                 }
             }
-
         }
     } else {
         println!("Not a module");
@@ -191,13 +183,9 @@ pub fn if_def(e: &mut Env, mut v: Vec<DefaultTypes>) -> Vec<DefaultTypes> {
     v
 }
 
-
-
-
 fn create_func(name: &'static str, f: &'static DynFunc, e: &mut Env) {
     e.add_variable(name, DefaultTypes::Function(Function::new(Rc::new(f))));
 }
-
 
 pub fn load(e: &mut Env) {
     // Most important functions
@@ -215,5 +203,4 @@ pub fn load(e: &mut Env) {
     create_func("noteq", &noteq, e);
     create_func("remove", &rm, e);
     create_func("break", &break_def, e);
-
 }

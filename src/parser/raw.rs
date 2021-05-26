@@ -1,4 +1,4 @@
-use super::{Statement, Statements, io};
+use super::{io, Statement, Statements};
 
 pub(super) fn split_w(s: &str) -> Option<Vec<String>> {
     let mut s1 = String::new();
@@ -16,16 +16,17 @@ pub(super) fn split_w(s: &str) -> Option<Vec<String>> {
         }
     }
 
-    let new_s = String::from(s1
-        .replace(";", " ;")
-        .replace("{", " { ;")
-        .replace("}", " } ;")
-        .replace(",", " ")
-        .replace("(", "( ")
-        .replace(")", " )")
-        .split("//")
-        .next()
-        .unwrap());
+    let new_s = String::from(
+        s1.replace(";", " ;")
+            .replace("{", " { ;")
+            .replace("}", " } ;")
+            .replace(",", " ")
+            .replace("(", "( ")
+            .replace(")", " )")
+            .split("//")
+            .next()
+            .unwrap(),
+    );
     if new_s == *"" {
         None
     } else {
@@ -39,7 +40,9 @@ pub(super) fn split_w(s: &str) -> Option<Vec<String>> {
 }
 
 pub(super) fn organize_s<T>(lines: T) -> Statements
-    where T: Iterator<Item = Result<String, io::Error>>, {
+where
+    T: Iterator<Item = Result<String, io::Error>>,
+{
     let mut statements = Vec::new();
     let mut i: u32 = 1;
     for line in lines {
@@ -51,10 +54,9 @@ pub(super) fn organize_s<T>(lines: T) -> Statements
     statements
 }
 
-
 pub(super) fn fuse_statements(s: Statements) -> Statements {
     let mut new: Statements = Vec::new();
-    let raw: Vec<String> = vec!();
+    let raw: Vec<String> = vec![];
     let mut unfinished_statement = Statement::new(raw, 1);
     for mut statement in s {
         let mut slice: Vec<String> = statement.mut_raw()[0..].to_vec();
@@ -64,14 +66,14 @@ pub(super) fn fuse_statements(s: Statements) -> Statements {
             let unf = unfinished_statement.mut_raw();
             let len = unf.len();
             if len > 0 {
-                unf[len-1].push_str(&x[0]);
+                unf[len - 1].push_str(&x[0]);
                 slice = statement.mut_raw()[1..].to_vec();
             }
         }
         unfinished_statement.mut_raw().append(&mut slice);
         if unfinished_statement.is_finished() {
             new.push(unfinished_statement);
-            unfinished_statement = Statement::new(vec!(), l+1);
+            unfinished_statement = Statement::new(vec![], l + 1);
         }
     }
     new

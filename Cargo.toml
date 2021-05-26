@@ -1,6 +1,6 @@
 [package]
 name = "lucerna"
-version = "0.4.1"
+version = "0.4.2"
 authors = ["Kyando_2 <amehikoji@gmail.com>", "Jonesloto"]
 edition = "2018"
 
