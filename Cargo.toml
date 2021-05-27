@@ -5,6 +5,8 @@ authors = ["Kyando_2 <amehikoji@gmail.com>", "Jonesloto"]
 edition = "2018"
 
 
-[dependencies]
-liber = {path = "../lucerna_libs/liber"}
-structures = {path = "../lucerna_structures"}
+[dependencies.liber]
+git = "https://github.com/Lucerna-Lang/Liber"
+
+[dependencies.structures]
+git = "https://github.com/Lucerna-Lang/Structures"
