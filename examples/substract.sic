@@ -1,0 +1,4 @@
+print("Substraction example:|-");
+print("5 - 3 = ");
+print(toString(substract(5, 3)));
+newline();

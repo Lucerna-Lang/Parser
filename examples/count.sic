@@ -1,0 +1,9 @@
+print("Loop example:|-");
+
+func_d -> {
+    print(toString(until_i));
+    newline();
+}
+
+doUntil(5, func_d, "Hello");
+

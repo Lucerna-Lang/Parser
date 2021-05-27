@@ -1,0 +1,4 @@
+print("Multiplication example:|-");
+print("5 x 3 = ");
+print(toString(multiply(5, 3)));
+newline();

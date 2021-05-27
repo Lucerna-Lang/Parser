@@ -1,0 +1,3 @@
+print("Check if number is smaller example:|-");
+print(toString(smaller(5, 3)));
+newline();
