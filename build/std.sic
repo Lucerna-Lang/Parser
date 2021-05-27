@@ -1,0 +1,35 @@
+newline -> {
+    print("|-");
+}
+
+set(strings, "newline", newline);
+remove("newline");
+
+smaller -> {
+    i1 -> get(args, "0");
+    i2 -> get(args, "1");
+    return(larger(i2, i1));
+}
+
+substract -> {
+    i1 -> get(args, "0");
+    i2 -> get(args, "1");
+    return(add(i1, neg(i2)));
+}
+
+doUntil -> {
+    until -> get(args, "0");
+    doer -> get(args, "1");
+    argsUntil -> get(args, "2");
+    until_i -> 0;
+    loop(doUntilP);
+}
+
+doUntilP -> {
+    doer(argsUntil);
+    until_i = add(until_i, 1);
+    if(eq(until_i, until), break);
+}
+
+load(strings);
+load(math);

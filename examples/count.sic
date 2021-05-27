@@ -1,8 +1,11 @@
 print("Loop example:|-");
 
+load(thread);
+
 func_d -> {
     print(toString(until_i));
     newline();
+    wait(500);
 }
 
 doUntil(5, func_d, "Hello");
