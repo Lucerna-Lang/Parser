@@ -2,6 +2,7 @@ use crate::base::load as load_base;
 use crate::parser::function::parse_functions;
 use crate::parser::parse_with_env;
 use liber::loader;
+use web::loader as web_loader;
 use std::env;
 use structures::structs::{Env, Function, Statements};
 
@@ -12,6 +13,7 @@ pub fn caller(sv: Statements, e: &mut Env, is_std: bool) -> &Env {
     // Loads the environment with default libs
     load_base(e);
     loader(e);
+    web_loader(e);
     if !is_std {
         load_std(e);
     }
