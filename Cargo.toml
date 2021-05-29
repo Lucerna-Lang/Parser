@@ -1,6 +1,6 @@
 [package]
 name = "lucerna"
-version = "0.5.2"
+version = "0.6.2"
 authors = ["Kyando_2 <amehikoji@gmail.com>"]
 edition = "2018"
 build = "build.rs"
