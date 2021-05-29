@@ -6,10 +6,8 @@ pub(super) fn split_w(s: &str) -> Option<Vec<String>> {
     for x in s.chars() {
         if !is_in_literal || x != ' ' {
             s1.push(x);
-        } else if x == ' ' {
+        } else {
             s1.push_str("|_");
-        } else if x == '/' {
-            s1.push_str("|:");
         }
         if x == '"' && is_in_literal {
             is_in_literal = false;
