@@ -1,5 +1,6 @@
 print("Loop example:|-");
 
+load(request);
 load(thread);
 
 func_d -> {

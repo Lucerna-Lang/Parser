@@ -1,5 +1,4 @@
-use winres;
-
+// Set icon to icon.ico
 fn main() {
     if cfg!(target_os = "windows") {
         let mut res = winres::WindowsResource::new();

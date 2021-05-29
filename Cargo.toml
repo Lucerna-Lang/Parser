@@ -1,12 +1,18 @@
 [package]
 name = "lucerna"
-version = "0.4.2"
+version = "0.5.2"
 authors = ["Kyando_2 <amehikoji@gmail.com>"]
 edition = "2018"
-
+build = "build.rs"
 
 [dependencies.liber]
 git = "https://github.com/Lucerna-Lang/Liber"
 
 [dependencies.structures]
 git = "https://github.com/Lucerna-Lang/Structures"
+
+[dependencies.web]
+git = "https://github.com/Lucerna-Lang/Web"
+
+[build-dependencies]
+winres = "0.1"
