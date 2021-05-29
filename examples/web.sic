@@ -1,0 +1,3 @@
+print("Web example: ");
+t -> getreq("users.roblox.com/v1/users/search?keyword=kyando210&limit=10");
+print(get(t, "body"));
