@@ -2,7 +2,7 @@ newline -> {
     print("|-");
 }
 
-set(strings, "newline", newline);
+strings -> set(strings, "newline", newline);
 remove("newline");
 
 smaller -> {
@@ -11,11 +11,17 @@ smaller -> {
     return(larger(i2, i1));
 }
 
+math -> set(math, "smaller", smaller);
+remove("smaller");
+
 substract -> {
     i1 -> get(args, "0");
     i2 -> get(args, "1");
     return(add(i1, neg(i2)));
 }
+
+math -> set(math, "substract", substract);
+remove("substract");
 
 doUntil -> {
     until -> get(args, "0");
@@ -25,11 +31,17 @@ doUntil -> {
     loop(doUntilP);
 }
 
+thread -> set(thread, "doUntil", doUntil);
+remove("doUntil");
+
 doUntilP -> {
     doer(argsUntil);
     until_i = add(until_i, 1);
     if(eq(until_i, until), break);
 }
+
+thread -> set(thread, "doUntilP", doUntilP);
+remove("doUntilP");
 
 load(strings);
 load(math);
