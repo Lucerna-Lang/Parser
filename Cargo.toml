@@ -6,13 +6,13 @@ edition = "2018"
 build = "build.rs"
 
 [dependencies.liber]
-git = "https://github.com/Lucerna-Lang/Liber"
+path = "../Liber"
 
 [dependencies.structures]
-git = "https://github.com/Lucerna-Lang/Structures"
+path = "../Structures"
 
 [dependencies.web]
-git = "https://github.com/Lucerna-Lang/Web"
+path = "../Web"
 
 [build-dependencies]
 winres = "0.1"

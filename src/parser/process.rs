@@ -2,9 +2,9 @@ use crate::base::load as load_base;
 use crate::parser::function::parse_functions;
 use crate::parser::parse_with_env;
 use liber::loader;
-use web::loader as web_loader;
 use std::env;
 use structures::structs::{Env, Function, Statements};
+use web::loader as web_loader;
 
 const STDFILE: &str = "std.sic";
 

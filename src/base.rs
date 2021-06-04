@@ -151,13 +151,8 @@ pub fn load_module(e: &mut Env, mut v: Vec<DefaultTypes>) -> Vec<DefaultTypes> {
     let x = vec![];
     let tab = v.remove(0);
     if let DefaultTypes::Table(t) = tab {
-        for p in t.iter_data() {
-            match (p.key(), p.value()) {
-                (DefaultTypes::Str(k), v) => e.add_variable(&k, v.clone()),
-                (_, _) => {
-                    println!("Non standard Table, contains Non-string ")
-                }
-            }
+        for (k, v) in t.iter_data() {
+            e.add_variable(&k, v.clone());
         }
     } else {
         println!("Not a module");
