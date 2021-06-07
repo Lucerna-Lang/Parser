@@ -83,6 +83,9 @@ pub fn add(e: &mut Env, mut v: Vec<DefaultTypes>) -> Vec<DefaultTypes> {
     match (int1, int2) {
         (DefaultTypes::Int(i1), DefaultTypes::Int(i2)) => {
             vec![DefaultTypes::Int(i1 + i2)]
+        },
+        (DefaultTypes::Str(string), DefaultTypes::Str(other_string)) => {
+           vec![DefaultTypes::Str(format!("{}{}", &string, &other_string))] 
         }
         (_, _) => v,
     }
@@ -94,7 +97,7 @@ pub fn eq(e: &mut Env, mut v: Vec<DefaultTypes>) -> Vec<DefaultTypes> {
     match (int1, int2) {
         (DefaultTypes::Int(i1), DefaultTypes::Int(i2)) => {
             vec![DefaultTypes::Bool(i1 == i2)]
-        }
+        },
         (_, _) => {
             println!("Attempting to call eq on different types");
             v
