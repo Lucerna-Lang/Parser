@@ -12,8 +12,7 @@ const STDFILE: &str = "std.sic";
 pub fn caller(sv: Statements, e: &mut Env, is_std: bool) -> &Env {
     // Loads the environment with default libs
     load_base(e);
-    loader(e);
-    web_loader(e);
+    loader(e);web_loader(e);
     if !is_std {
         load_std(e);
     }

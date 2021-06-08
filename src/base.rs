@@ -9,7 +9,6 @@ pub fn print(e: &mut Env, v: Vec<DefaultTypes>) -> Vec<DefaultTypes> {
     if let DefaultTypes::Str(s) = x {
         print!("{}", s);
     } else {
-        dbg!(&x);
         println!("Bad arguments");
         e.exit();
     }
@@ -17,8 +16,9 @@ pub fn print(e: &mut Env, v: Vec<DefaultTypes>) -> Vec<DefaultTypes> {
 }
 
 #[allow(clippy::needless_pass_by_value)]
-pub fn debug(e: &mut Env, v: Vec<DefaultTypes>) -> Vec<DefaultTypes> {
-    dbg!(&v);
+pub fn debug(e: &mut Env, mut v: Vec<DefaultTypes>) -> Vec<DefaultTypes> {
+    let debug = v.remove(0);
+    dbg!(&debug);
     v
 }
 
