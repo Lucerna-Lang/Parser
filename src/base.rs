@@ -16,6 +16,12 @@ pub fn print(e: &mut Env, v: Vec<DefaultTypes>) -> Vec<DefaultTypes> {
     v
 }
 
+#[allow(clippy::needless_pass_by_value)]
+pub fn debug(e: &mut Env, v: Vec<DefaultTypes>) -> Vec<DefaultTypes> {
+    dbg!(&v);
+    v
+}
+
 // We store this function as a function pointer in a Vec, so the type signatures must line up
 #[allow(clippy::needless_pass_by_value)]
 pub fn with(e: &mut Env, v: Vec<DefaultTypes>) -> Vec<DefaultTypes> {
@@ -154,8 +160,17 @@ pub fn load_module(e: &mut Env, mut v: Vec<DefaultTypes>) -> Vec<DefaultTypes> {
     let x = vec![];
     let tab = v.remove(0);
     if let DefaultTypes::Table(t) = tab {
-        for (k, v) in t.iter_data() {
-            e.add_variable(&k, v.clone());
+        for (k, mut v) in t.iter_data() {
+            let mut ks = false;
+            if let DefaultTypes::Table(tab) = v {
+                if !tab.raw_get(k).is_none() {
+                    e.add_variable(&k, tab.raw_get(k).unwrap());
+                    ks = true;
+                }
+            }
+            if !ks {
+                e.add_variable(&k, v.clone());
+            }
         }
     } else {
         println!("Not a module");
@@ -194,6 +209,7 @@ pub fn load(e: &mut Env) {
     create_func("table", &table, e);
     create_func("get", &get, e);
     create_func("add", &add, e);
+    create_func("dbg", &debug, e);
     create_func("loop", &loop_def, e);
     create_func("set", &set, e);
     create_func("load", &load_module, e);
