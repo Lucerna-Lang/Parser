@@ -10,7 +10,7 @@ pub fn print(e: &mut Env, v: Vec<DefaultTypes>) -> Vec<DefaultTypes> {
         print!("{}", s);
     } else {
         println!("Bad arguments");
-        e.exit();
+        e.exit("Attempted to print non string", e.cline());
     }
     v
 }
@@ -51,10 +51,18 @@ pub fn get(e: &mut Env, v: Vec<DefaultTypes>) -> Vec<DefaultTypes> {
     let key = v.get(1).expect("Bad Arguments");
     if let DefaultTypes::Table(t) = tab {
         if let DefaultTypes::Str(s) = key {
-            x.push(t.raw_get(s).expect("Value didn't exist"));
+            match t.raw_get(s) {
+                Some(added) => {
+                    x.push(added);
+                },
+                None => e.exit("Could not find item in table", e.cline()),
+            }
+
+        } else {
+            e.exit("Attempted to index table with non string", e.cline());
         }
     } else {
-        println!("Invalid type");
+        e.exit("Attempted to get non table", e.cline());
     }
     x
 }
@@ -93,7 +101,9 @@ pub fn add(e: &mut Env, mut v: Vec<DefaultTypes>) -> Vec<DefaultTypes> {
         (DefaultTypes::Str(string), DefaultTypes::Str(other_string)) => {
            vec![DefaultTypes::Str(format!("{}{}", &string, &other_string))] 
         }
-        (_, _) => v,
+        (_, _) => {
+            e.exit("Attempting to add different types", e.cline());
+        }
     }
 }
 
@@ -104,6 +114,9 @@ pub fn eq(e: &mut Env, mut v: Vec<DefaultTypes>) -> Vec<DefaultTypes> {
         (DefaultTypes::Int(i1), DefaultTypes::Int(i2)) => {
             vec![DefaultTypes::Bool(i1 == i2)]
         },
+        (DefaultTypes::Str(s1), DefaultTypes::Str(s2)) => {
+            vec![DefaultTypes::Bool(s1 == s2)]
+        }
         (_, _) => {
             println!("Attempting to call eq on different types");
             v
@@ -139,10 +152,11 @@ pub fn set(e: &mut Env, mut v: Vec<DefaultTypes>) -> Vec<DefaultTypes> {
         if let DefaultTypes::Str(s) = key {
             t.set(s, value);
             x.push(DefaultTypes::Table(t));
+        } else {
+            e.exit("Attempted to index table without string", e.cline());
         }
     } else {
-        println!("Invalid type");
-        e.exit();
+        e.exit("Expected table", e.cline());
     }
     x
 }
@@ -152,6 +166,8 @@ pub fn rm(e: &mut Env, mut v: Vec<DefaultTypes>) -> Vec<DefaultTypes> {
     let key = v.remove(0);
     if let DefaultTypes::Str(s) = key {
         e.remove(&s);
+    } else {
+        e.exit("Remove expected a string", e.cline());
     }
     x
 }
@@ -173,8 +189,7 @@ pub fn load_module(e: &mut Env, mut v: Vec<DefaultTypes>) -> Vec<DefaultTypes> {
             }
         }
     } else {
-        println!("Not a module");
-        e.exit();
+        e.exit("Expected module", e.cline());
     }
     x
 }

@@ -2,6 +2,11 @@ strings.newline -> {
     print("|-");
 }
 
+strings.println -> {
+    print(args.0);
+    newline();
+}
+
 
 math.smaller -> {
     i1 -> get(args, "0");
@@ -31,3 +36,40 @@ thread.doUntilP -> {
 
 load(strings);
 load(math);
+
+strings.ifteAddToBuffer -> {
+    buffer -> add(buffer, toAdd);
+}
+
+strings.ifteSetStart -> {
+    started -> true;
+}
+
+strings.ifteP -> {
+    char -> indexString(indexed, index);
+    index -> add(index, 1);
+    // print("char: ");
+    // print(char);
+    // newline();
+    // print("start: ");
+    // print(start);
+    // newline();
+    if(eq(char, start), strings.ifteSetStart);
+    toAdd -> char;
+    if(started, strings.ifteAddToBuffer);
+    if(eq(char, end), break);
+}
+
+strings.ifte -> {
+    indexed -> args.0;
+    start -> args.1;
+    end -> args.2;
+    started -> false;
+    index -> 0;
+    buffer -> "";
+    loop(strings.ifteP);
+    return(buffer);
+}
+
+
+
