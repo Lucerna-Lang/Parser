@@ -1,0 +1,15 @@
+print("Web example: ");
+
+load(thread);
+load(request);
+load(strings);
+newline();
+// getreq is part of the "request" std module defined at
+// https://github.com/Lucerna-Lang/Web
+// Request the roblox API.
+t -> getreq("users.roblox.com/v1/users/search?keyword=kyando210&limit=10");
+print("Name: ");
+// ifte is part of the strings table and
+c -> ifte(t.body, "K", "0");
+print(c);
+newline();

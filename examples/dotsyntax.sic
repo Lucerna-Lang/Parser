@@ -1,0 +1,27 @@
+print("Dot syntax example:|-");
+
+
+table = [];
+
+table.sub = [];
+
+table.hey = "hello";
+
+table.sub.text = "Sup";
+
+table.sub.sub = [];
+
+table.sub.sub.text = "haha";
+
+table.sub.func -> {
+    my_tab = args.0;
+    print(my_tab.sub.sub.text);
+    newline();
+    my_tab.shock();
+}
+
+table.shock -> {
+    print("I'm shocked");
+}
+
+table.sub.func(table);

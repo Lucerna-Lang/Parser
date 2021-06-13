@@ -1,0 +1,15 @@
+print("Loop example:|-");
+
+load(thread);
+load(request);
+
+wait_time -> 200;
+
+func_d -> {
+    print(toString(until_i));
+    newline();
+    wait(wait_time);
+}
+
+doUntil(5, func_d, "Hello");
+
